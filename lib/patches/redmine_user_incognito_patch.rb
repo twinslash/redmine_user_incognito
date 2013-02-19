@@ -14,7 +14,7 @@ module RedmineUserIncognitoPatch
         link_to_user_without_incognito(user, options)
 
       elsif user.is_a?(Group)
-        'is a Group'
+        'Group'
       elsif user.is_a?(User)
 
         if params[:controller] == 'issues'
@@ -34,10 +34,10 @@ module RedmineUserIncognitoPatch
             end
 
         else
-          ""
+          link_to_user_without_incognito(user, options)
         end
       else
-        "no USER no GROUP"
+        ""
       end
     end
   end
