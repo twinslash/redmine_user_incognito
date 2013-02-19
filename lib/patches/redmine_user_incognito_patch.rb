@@ -9,10 +9,9 @@ module RedmineUserIncognitoPatch
 
   module InstanceMethods
     def link_to_user_with_incognito(user, options={})
-
+        p "================link_to=================="
       if user == User.current || User.current.admin?
         link_to_user_without_incognito(user, options)
-
       elsif user.is_a?(Group)
         'Group'
       elsif user.is_a?(User)
@@ -21,6 +20,8 @@ module RedmineUserIncognitoPatch
           project = params[:project_id] ? Project.find(params[:project_id]) : Issue.find(params[:id]).project
         elsif params[:controller] == 'projects'|| params[:controller] == 'activities'
           project = Project.find(params[:id])
+        elsif params[:controller] == 'journals'
+           project = Journal.find(params[:id]).issue.project
         end
 
         if User.current.allowed_to?(:no_show_names, project)
