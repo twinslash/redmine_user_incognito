@@ -20,7 +20,7 @@ module RedmineIssuesHelperIncognitoPatch
               project = Project.find(params[:id])
             end
 
-            if User.current.allowed_to?(:no_show_names, project) && !User.current.admin? && params[:controller] = 'issues'||'projects'
+            if User.current.allowed_to?(:no_show_names, project) && !User.current.admin? && params[:controller] ==  'issues'||params[:controller] == 'projects'
               return record.roles_for_project(project).collect{|role| "#{role.name}" }.join(' ')
             end
           end

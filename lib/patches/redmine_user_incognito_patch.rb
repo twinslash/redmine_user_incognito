@@ -19,20 +19,12 @@ module RedmineUserIncognitoPatch
 
         if params[:controller] == 'issues'
           project = params[:project_id] ? Project.find(params[:project_id]) : Issue.find(params[:id]).project
-        elsif params[:controller] == 'projects'
+        elsif params[:controller] == 'projects'|| params[:controller] == 'activities'
           project = Project.find(params[:id])
         end
 
         if User.current.allowed_to?(:no_show_names, project)
-          case params[:controller]
-            when 'projects'
               user.roles_for_project(project).collect{|role| "#{role.name}" }.join(' ')
-            when 'issues'
-              user.roles_for_project(project).collect{|role| "#{role.name}" }.join(' ')
-            else
-             'left controller'
-            end
-
         else
           link_to_user_without_incognito(user, options)
         end
