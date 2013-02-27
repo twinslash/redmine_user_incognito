@@ -10,7 +10,7 @@ module RedmineHelperPatch
         if params[:controller] == 'issues'
           params[:project_id] ? Project.find(params[:project_id]) : Issue.find(params[:id]).project
         elsif params[:controller] == 'projects'|| params[:controller] == 'activities' || params[:controller] == 'reports'
-          Project.find(params[:id])||@project
+          Project.find(params[:id]) unless params[:id].nil?
         elsif params[:controller] == 'journals'
           Journal.find(params[:id]).issue.project
         end
